@@ -8,6 +8,6 @@ function About() {
             <img src={coverImage} className= 'my-2' style={{width: '100%' }} alt='cover'/>
         </section>
     );
-}
+};
 
 export default About;
