@@ -6,7 +6,7 @@ import { capitalizeFirstLetter } from "../../utils/helpers";
 function Nav(props) {
     const {
         categories = [],
-        setCurrentCategory.
+        setCurrentCategory,
         currentCategory,
     } = props;
     
