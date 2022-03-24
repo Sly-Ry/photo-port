@@ -1,70 +1,40 @@
-# Getting Started with Create React App
+Using React Hooks
+React Hooks are a fairly recent addition to the React library that allow you to easily manage state within a component. Before jumping into exactly what a hook is, let's see how one would be used to solve our stopwatch dilemma. Take a minute to look at the following code:
 
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+```
+import React, { useState } from "react"
 
-## Available Scripts
+function SomeComponent() {
+  const [seconds, setSeconds] = useState(0)
 
-In the project directory, you can run:
+  function startStopwatch() {
+    let updatedSeconds = seconds;
+    setInterval(() => {
+      updatedSeconds += 1;
+      console.log(updatedSeconds);
+      setSeconds(updatedSeconds);
+    }, 1000);
+  }
 
-### `npm start`
+return (
+  <div>
+    {seconds}
+    <button onClick={startStopwatch} >Start</button>
+  </div>
+)
+}
+```
 
-Runs the app in the development mode.\
-Open [http://localhost:3000](http://localhost:3000) to view it in your browser.
+So there's a couple of things going on here. The first is that we import ```useState``` as a named import from ```react```. This is nothing more than destructuring from imports like you've done in the past. Then within SomeComponent, we're destructuring a pair of variables from the result of ```useState(0)```. ```useState()``` is a function that will always return an array. The first item is the value of your state, and the second item is a ```setter```, which allows you to set the state to something else. Because we're destructuring from an array, we could name these two things whatever we want, but it's best to stick to variable names that make sense.
 
-The page will reload when you make changes.\
-You may also see any lint errors in the console.
+Rather than trying to change ```seconds``` with the ```+=``` operator, we need to use the ```setSeconds``` method, passing the updated state as an argument. This method is what triggers our component to re-render. Because ```setSeconds``` is asynchronous, we create a new variable called ```updatedSeconds``` to keep track of the seconds in real time.
 
-### `npm test`
+There's one last bit. Can you guess what ```0``` refers to in ```useState(0)```? If you guessed "the initial state," you were right. This could be any data type, but starting a stopwatch with the number ```0``` makes the most sense.
 
-Launches the test runner in the interactive watch mode.\
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
+Hooks - JavaScript functions that follow two rules:
 
-### `npm run build`
+    The first rule is "Only call Hooks from React functions." This should be easy to remember, because you often use Hooks to affect the state of a component in some way and trigger the component to render.
 
-Builds the app for production to the `build` folder.\
-It correctly bundles React in production mode and optimizes the build for the best performance.
+    The second rule is "Only call Hooks at the top level". This means that you cannot use them inside for loops, nested functions within your React component, or conditionals. For organizational purposes and to ensure that you're following these rules, you may want to use Hooks towards the top of your React component.
 
-The build is minified and the filenames include the hashes.\
-Your app is ready to be deployed!
-
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
-
-### `npm run eject`
-
-**Note: this is a one-way operation. Once you `eject`, you can't go back!**
-
-If you aren't satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
-
-Instead, it will copy all the configuration files and the transitive dependencies (webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you're on your own.
-
-You don't have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn't feel obligated to use this feature. However we understand that this tool wouldn't be useful if you couldn't customize it when you are ready for it.
-
-## Learn More
-
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
-
-To learn React, check out the [React documentation](https://reactjs.org/).
-
-### Code Splitting
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/code-splitting](https://facebook.github.io/create-react-app/docs/code-splitting)
-
-### Analyzing the Bundle Size
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size](https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size)
-
-### Making a Progressive Web App
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app](https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app)
-
-### Advanced Configuration
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/advanced-configuration](https://facebook.github.io/create-react-app/docs/advanced-configuration)
-
-### Deployment
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/deployment](https://facebook.github.io/create-react-app/docs/deployment)
-
-### `npm run build` fails to minify
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify](https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify)
+   useEffect - The main difference between useEffect and useState is that useEffect is an API that reflects the lifecycle methods of the component, such as when the component mounts, unmounts, or updates.
