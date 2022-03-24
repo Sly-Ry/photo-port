@@ -3,15 +3,31 @@ import { render, cleanup } from '@testing-library/react';
 import '@testing-library/jest-dom/extend-expect';
 import Nav from '..';
 
+const categories = [
+    {  name: 'portraits', description: 'Portraits of people in my life' }
+]
+
+const mockCurrentCategory = jest.fn();
+const mockSetCurrentCategory = jest.fn();
+
 afterEach(cleanup);
 
 describe('Nav component', () => {
     it('renders', () => {
-        render(<Nav />);
+        render(<Nav 
+            categories={categories}
+            setCurrentCategory={mockSetCurrentCategory}
+            currentCategory={mockCurrentCategory}    
+        />);
     });
 
     it('matches snapshot', () => {
-        const { asFragment } = render(<Nav />);
+        const { asFragment } = 
+            render(<Nav 
+                categories={categories}
+                setCurrentCategory={mockSetCurrentCategory}
+                currentCategory={mockCurrentCategory}    
+            />);
 
         expect(asFragment()).toMatchSnapshot();
     });
@@ -20,7 +36,12 @@ describe('Nav component', () => {
 // Test for emoji visibility
 describe('emoji is visible', () => {
     it('insert emoji into the h2', () => {
-        const { getByLabelText } = render(<Nav />);
+        const { getByLabelText } = 
+            render(<Nav 
+            categories={categories}
+            setCurrentCategory={mockSetCurrentCategory}
+            currentCategory={mockCurrentCategory}    
+        />);
 
         expect(getByLabelText('camera')).toHaveTextContent('📸');
     });
@@ -28,7 +49,12 @@ describe('emoji is visible', () => {
 
 describe('links are visible', () => {
     it('inserts text into the links', () => {
-        const { getByTestId } = render(<Nav />);
+        const { getByTestId } = 
+            render(<Nav 
+            categories={categories}
+            setCurrentCategory={mockSetCurrentCategory}
+            currentCategory={mockCurrentCategory}    
+        />);
 
         // Two 'expect' statements asserts that both links must have their text contents inserted. If either assertion fails, this test will fail. This is why the preceding screenshot has an additional passing test rather than two additional tests. 
         // Therefore, each 'it' function is associated with a single test case.
