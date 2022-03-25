@@ -3,6 +3,7 @@ import React, { useState } from 'react';
 import About from './components/About';
 import Nav from './components/Nav';
 import Gallery from './components/Gallery';
+import Contact from './components/Contact';
 
 //  JSX can represent HTML in JavaScript
 // Normally you can't add HTML to JavaScript, at least without making it a string. But it won't break the code in this case, because you're using webpack and React. 
@@ -38,6 +39,7 @@ function App() {
         currentCategory={currentCategory}
       ></Nav>
       <main>
+        <Contact></Contact>
         <Gallery currentCategory={currentCategory}></Gallery>
         <About></About>
       </main>
