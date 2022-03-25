@@ -1,4 +1,5 @@
 import React, {useState} from "react";
+import { validateEmail } from "../../utils/helpers";
 
 function Contact() {
     // A feature of this Hook is the ability to initialize the values of the state. In this case, we want to clear the input fields on the component loading. Thus, we'll set the initial state to empty strings
@@ -6,13 +7,44 @@ function Contact() {
     // Destructure the formState object into its named properties, name, email, and message.
     const { name, email, message } = formState;
 
+    // useState Hook to handle the error state. Note that the initial state of the errorMessage is an empty string. 
+    const [errorMessage, setErrorMessage] = useState('');
+
     // the handleChange function. This function will sync the internal state of the component formState with the user input from the DOM.
     function handleChange(e) {
+        // This conditional statement says if the <input> is email, then validate the value of that input field with the validateEmail function and assign its return to isValid.
+        if (e.target.name === 'email') {
+            const isValid = validateEmail(e.target.value);
+            console.log(isValid);
+            
+            if (!isValid) {
+                setErrorMessage('Please enter a valid email.');
+            } 
+            else {
+                setErrorMessage('');
+            }
+        }
+        // Handle the 'message' and 'name' form elements with an else clause of the parent conditional statement that targeted the email form element
+        else {
+            // We're checking the message and name form element values.
+            // The nested conditional statement checks whether the values of these elements are blank. If the input values are blank, an error message is assigned to 'errorMessage'; if not, 'errorMessage' is set to empty string, meaning that there's no error
+            if (!e.target.value.length) {
+                setErrorMessage(`${e.target.name} is required.`);
+            }
+            else {
+                setErrorMessage('');
+            }
+        }
+
+        // We wrap the setter function, setFormState, in a conditional so that the state only updates if the form data has passed the quality tests, 
         // we're using the setFormState function to update the formState value for the name property.
         // We use the spread operator '...formState' so we can retain the other key-value pairs in this object. Without the spread operator, the formState object would be overwritten to only contain the 'name: value' key pair.
         // The 'name' property of 'target' in the preceding expression actually refers to the name attribute of the form element. This attribute value matches the property names of formState '(name, email, and message)' and allows us to use [ ] to create dynamic property names.
         // We assign the value taken from the input field in the UI with 'e.target.value' and assign this value to the property [e.target.'prop'].
-        setFormState({...formState, [e.target.name]: e.target.value })
+        if (!errorMessage) {
+            setFormState({...formState, [e.target.name]: e.target.value });
+        }
+        // The preceding conditional statement only allows the state to update with the user input if there is no error message, which is the correct logic.
     };
 
     function handleSubmit(e) {
