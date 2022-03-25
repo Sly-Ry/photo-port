@@ -15,8 +15,12 @@ function Contact() {
         setFormState({...formState, [e.target.name]: e.target.value })
     };
 
-    // Note that console.log(formState) is located outside the handleChange function declaration—because the asynchronous nature of the setFormState function will cause the console.log placed in the function body of handleChange to appear delayed in its ability to sync. However, when we place the console.log in the scope of the ContactForm function, we can see that the state is updated properly,
-    console.log(formState);
+    function handleSubmit(e) {
+        // We'll prevent the default action of the form Submit button.
+        e.preventDefault();
+        // Log the formState object on the Submit button click.
+        console.log(formState);
+    };
 
     return(
         <section>
@@ -24,7 +28,7 @@ function Contact() {
             {/* Because forms have an internal state, we can leverage the useState Hook to maintain the form data with state.
             When that form data is maintained by the state of the component, we call it a controlled component.
             When the data is retrieved, then submitted directly from the DOM, we call it an uncontrolled component*/}
-            <form id='contact-form'>
+            <form id='contact-form' onSubmit={handleSubmit}>
                 {/* Due to keywords reserved in JavaScript, we need to replace the for attribute in the <label> element to htmlFor, just as class had to be changed to className previously. */}
             <div>
                 <label htmlFor="name">Name:</label>
