@@ -37,4 +37,8 @@ Hooks - JavaScript functions that follow two rules:
 
     The second rule is "Only call Hooks at the top level". This means that you cannot use them inside for loops, nested functions within your React component, or conditionals. For organizational purposes and to ensure that you're following these rules, you may want to use Hooks towards the top of your React component.
 
-   useEffect - The main difference between useEffect and useState is that useEffect is an API that reflects the lifecycle methods of the component, such as when the component mounts, unmounts, or updates.
+useEffect - The main difference between useEffect and useState is that useEffect is an API that reflects the lifecycle methods of the component, such as when the component mounts, unmounts, or updates.
+
+A single-page application, or SPA, is a web application or website that interacts with the web browser by dynamically rewriting the current webpage, in place of the default method of the browser loading entirely new pages. This approach allows for a more fluid UI because the page doesn't have to be reloaded each time. React allows for conditional rendering and can replace a portion of the webpage based on the user's selection.
+
+ternary operator - A shorthand condition identified with the ```?``` and ```:``` symbols. The ternary operator is a popular pattern in React to enable conditional rendering, similar to how we used the && operator as a short circuit. With the ternary, though, we supply the false condition to render as well.

@@ -15,10 +15,9 @@ function Contact() {
         // This conditional statement says if the <input> is email, then validate the value of that input field with the validateEmail function and assign its return to isValid.
         if (e.target.name === 'email') {
             const isValid = validateEmail(e.target.value);
-            console.log(isValid);
             
             if (!isValid) {
-                setErrorMessage('Please enter a valid email.');
+                setErrorMessage('A valid email is required.');
             } 
             else {
                 setErrorMessage('');
@@ -35,6 +34,11 @@ function Contact() {
                 setErrorMessage('');
             }
         }
+    };
+
+    function handleSubmit(e) {
+        // We'll prevent the default action of the form Submit button.
+        e.preventDefault();
 
         // We wrap the setter function, setFormState, in a conditional so that the state only updates if the form data has passed the quality tests, 
         // we're using the setFormState function to update the formState value for the name property.
@@ -45,18 +49,12 @@ function Contact() {
             setFormState({...formState, [e.target.name]: e.target.value });
         }
         // The preceding conditional statement only allows the state to update with the user input if there is no error message, which is the correct logic.
-    };
-
-    function handleSubmit(e) {
-        // We'll prevent the default action of the form Submit button.
-        e.preventDefault();
-        // Log the formState object on the Submit button click.
-        console.log(formState);
+        console.log('Form', formState);
     };
 
     return(
         <section>
-            <h1>Contact</h1>
+            <h1 data-testid='h1tag'> Contact</h1>
             {/* Because forms have an internal state, we can leverage the useState Hook to maintain the form data with state.
             When that form data is maintained by the state of the component, we call it a controlled component.
             When the data is retrieved, then submitted directly from the DOM, we call it an uncontrolled component*/}
@@ -66,17 +64,24 @@ function Contact() {
                 <label htmlFor="name">Name:</label>
                 {/* defaultValue attribute - that'll handle form data. With this attribute, we can assign the initial state values to the input fields in the DOM,  */}
                 {/* The onChange event listener will ensure that the handleChange function fires whenever a keystroke is typed into the input field for name. */}
-                <input type="text" defaultValue={name} onChange={handleChange} name="name" />
+                {/* The onBlur attribute will fire the event once the user has changed focus from the input field, thus allowing the user to finish their entry before validating their input. */}
+                <input type="text" defaultValue={name} onBlur={handleChange} name="name" />
                 </div>
                 <div>
                 <label htmlFor="email">Email:</label>
-                <input type="email" defaultValue={email} onChange={handleChange}  name="email"  />
+                <input type="email" defaultValue={email} onBlur={handleChange}  name="email"  />
                 </div>
                 <div>
                 <label htmlFor="message">Message:</label>
-                <textarea name="message" defaultValue={message} onChange={handleChange} rows="5"  />
+                <textarea name="message" defaultValue={message} onBlur={handleChange} rows="5"  />
                 </div>
-                <button type="submit">Submit</button>
+                {/* If errorMessage has a truthy value, the <div> block will render. If errorMessage doesn't have an error message, the following <div> block doesn't render. The && operator—known as the AND operator—is being used here as a short circuit. If the first value resolves to true, the second expression is evaluated. */}
+                {errorMessage && (
+                    <div>
+                        <p className="error-text">{errorMessage}</p>
+                    </div>
+                )}
+                <button data-testId='button' type="submit">Submit</button>
             </form>
         </section>
     )

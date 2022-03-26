@@ -9,6 +9,8 @@ const categories = [
 
 const mockCurrentCategory = jest.fn();
 const mockSetCurrentCategory = jest.fn();
+const mockContactSelected = jest.fn();
+const mockSetContactSelected = jest.fn();
 
 afterEach(cleanup);
 
@@ -17,7 +19,9 @@ describe('Nav component', () => {
         render(<Nav 
             categories={categories}
             setCurrentCategory={mockSetCurrentCategory}
-            currentCategory={mockCurrentCategory}    
+            currentCategory={mockCurrentCategory}
+            contactSelected={mockContactSelected}
+            setContactedSelected={mockSetContactSelected} 
         />);
     });
 
@@ -26,7 +30,9 @@ describe('Nav component', () => {
             render(<Nav 
                 categories={categories}
                 setCurrentCategory={mockSetCurrentCategory}
-                currentCategory={mockCurrentCategory}    
+                currentCategory={mockCurrentCategory} 
+                contactSelected={mockContactSelected}
+                setContactedSelected={mockSetContactSelected}   
             />);
 
         expect(asFragment()).toMatchSnapshot();
@@ -40,7 +46,9 @@ describe('emoji is visible', () => {
             render(<Nav 
             categories={categories}
             setCurrentCategory={mockSetCurrentCategory}
-            currentCategory={mockCurrentCategory}    
+            currentCategory={mockCurrentCategory} 
+            contactSelected={mockContactSelected}
+            setContactedSelected={mockSetContactSelected}    
         />);
 
         expect(getByLabelText('camera')).toHaveTextContent('📸');
@@ -53,7 +61,9 @@ describe('links are visible', () => {
             render(<Nav 
             categories={categories}
             setCurrentCategory={mockSetCurrentCategory}
-            currentCategory={mockCurrentCategory}    
+            currentCategory={mockCurrentCategory}
+            contactSelected={mockContactSelected}
+            setContactedSelected={mockSetContactSelected}     
         />);
 
         // Two 'expect' statements asserts that both links must have their text contents inserted. If either assertion fails, this test will fail. This is why the preceding screenshot has an additional passing test rather than two additional tests. 
